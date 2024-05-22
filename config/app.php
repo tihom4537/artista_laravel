@@ -70,7 +70,24 @@ return [
     |
     */
 
-    'timezone' => 'UTC',
+    'timezone' => 'Asia/Kolkata',
+    'date_format' => 'd-m-Y',
+
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Default Date Format
+    |--------------------------------------------------------------------------
+    |
+    | This is the default date format that will be used by the framework
+    | to serialize dates when using the toArray and toJson methods on
+    | Eloquent models and when casting date attributes to strings.
+    |
+    */
+
+    'date_format' => 'd-m-Y',
+
 
     /*
     |--------------------------------------------------------------------------

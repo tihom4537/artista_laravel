@@ -24,7 +24,7 @@ class StoreUserRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required', 'string' , 'max:255'],
+            // 'name' => ['nullable', 'string' , 'max:255'],
             'email' => ['required', 'string', 'max:255', 'unique:users'],
             'password'=> ['required' , 'confirmed', new PasswordRule] // Update this line
             // 'password'=> ['required' , 'confirmed', Rules/Password::defaults()]

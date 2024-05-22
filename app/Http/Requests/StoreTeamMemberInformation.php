@@ -3,16 +3,15 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
-use App\Rules\PasswordRule;
 
-class StoreArtistRequest extends FormRequest
+class StoreTeamMemberInformation extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
     {
-        return True;
+        return true ;
     }
 
     /**
@@ -23,13 +22,13 @@ class StoreArtistRequest extends FormRequest
     public function rules(): array
     {
         return [
-            
-            'email' => ['required', 'string', 'max:255', 'unique:users'],
-            'password'=> ['required' , 'confirmed', new PasswordRule] // Update this line
-            // 'password'=> ['required' , 'confirmed', Rules/Password::defaults()]
+               'team_id'=>['required'],
+               'member_name'=>['required','max:255'],
+                'email' =>['required'],
+                'role'=>['required','max:255' ],
+                'profile_photo'=>['nullable','max:255' ],
+               
+                
         ];
-        // return [
-        //     //
-        // ];
     }
 }

@@ -40,12 +40,20 @@ return [
             'driver' => 'session',
             'provider' => 'users',
         ],
+        'artist' => [
+            'driver' => 'sanctum', // or any other driver you prefer
+            'provider' => 'artists', // define your own provider for artists
+        ],
+        'team' => [
+            'driver' => 'sanctum', // or any other driver you prefer
+            'provider' => 'teams', // define your own provider for artists
+        ],
     ],
 
-    'artist' => [
-        'driver' => 'sanctum', // or any other driver you prefer
-        'provider' => 'artists', // define your own provider for artists
-    ],
+    // 'artist' => [
+    //     'driver' => 'sanctum', // or any other driver you prefer
+    //     'provider' => 'artists', // define your own provider for artists
+    // ],
     /*
     |--------------------------------------------------------------------------
     | User Providers
@@ -71,6 +79,10 @@ return [
         'artists' => [
             'driver' => 'eloquent',
             'model' => App\Models\Artist::class, // Assuming you have a separate model for artists
+        ],
+        'teams' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\ArtistTeamInformation::class, // Assuming you have a separate model for artists
         ],
 
         // 'users' => [

@@ -9,6 +9,7 @@ use App\Models\Artist;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 
+
 class ArtistAuthController extends Controller
 {
     use HttpResponses; //importing trait
@@ -19,21 +20,29 @@ class ArtistAuthController extends Controller
         $request->validated($request->all());
         $credentials = $request->only('email', 'password');
 
-    if (!Auth::attempt($credentials)) {
-        return $this->error('', 'Credentials do not match', 401);
-    }
+        $user = Artist::where('email', $request->email)->first();
 
-    $user = Artist::where('email', $request->email)->first();
+        // Check if a user with the provided email exists
+        if (!$user) {
+            return $this->error('', 'User not found', 404);
+        }
+    
+        // Verify the password
+        if (!Hash::check($request->password, $user->password)) {
+            return $this->error('', 'Invalid password', 401);
+        }
+
+        // if (!Auth::attempt($credentials)) {
+        //     return $this->error('', 'Credentials do not match', 401);
+        // }
 
     return $this->success([
         'user' => $user,
         'token' =>$user->createToken('Api Token of ' . $user->name)->plainTextToken
     ]);
+   
 
-        // if(!Auth::attempt([$request->only('email','password')])){
-        //     return $this->error('','credentials do not match',401);
-        // }
-        // return 'this is my login method';
+      
     }
 
    
@@ -42,7 +51,7 @@ class ArtistAuthController extends Controller
     $request->validated($request->all());
 
     $user = Artist::create([
-        'name' => $request->name,
+        
         'email' => $request->email,
         'password' => Hash::make($request->password)
     ]);
@@ -55,7 +64,8 @@ class ArtistAuthController extends Controller
 
 public function logout()
 {
-    Auth::user()->currentAccessToken()->delete();
+    // Auth::guard('artist')->user()->id,
+    Auth::guard('artist')->user()->currentAccessToken()->delete();
 
     return $this->success([
         'message'=>'You have successfully been logged out and your token has been deleted'

@@ -5,6 +5,12 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserInformationController;
 use App\Http\Controllers\ArtistAuthController;
+use App\Http\Controllers\ArtistInformationController;
+use App\Http\Controllers\ArtistTeamInformationController;
+use App\Http\Controllers\TeamMemberInformationController;
+use App\Http\Controllers\ImageUploadController;
+use App\Http\Controllers\BookingController;
+use App\Http\Controllers\SMSController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,3 +49,32 @@ Route::group(['middleware'=> ['auth:sanctum']],function(){
     Route::resource('/info', UserInformationController::class);
     Route::post('/logout' , [AuthController::class, 'logout']);
 });
+Route::get('home/featured',[ArtistInformationController::class,'featured']);
+Route::get('home/categories/{skill_category}', [ArtistInformationController::class, 'getBySkillCategory']);
+Route::get('featured/artist_info/{id}',[ArtistInformationController::class,'ArtistInformation']);
+Route::get('home/featured/team',[ArtistTeamInformationController::class,'featuredTeam']);
+Route::get('featured/team/{id}',[ArtistTeamInformationController::class,'TeamInformation']);
+
+
+
+Route::resource('artist/team_info', ArtistTeamInformationController::class);
+Route::resource('artist/team_member', TeamMemberInformationController::class);
+
+
+Route::post('/upload-image', [ImageUploadController::class, 'upload']);
+Route::post('/sms', [SMSController::class, 'SMS']);
+
+Route::group(['middleware'=> ['auth:sanctum']],function(){
+Route::resource('/booking', BookingController::class);
+});
+Route::middleware(['auth:artist'])->group(function () {
+    // Routes that require authentication as an artist go here
+    Route::resource('artist/info', ArtistInformationController::class);
+});
+// Route::resource('artist/info', ArtistInformationController::class);
+
+// Route::group(['middleware'=> ['auth:sanctum']],function(){
+//     Route::resource('artist/info', ArtistInformationController::class);
+//     // Route::post('artist/logout' , [AuthController::class, 'logout']);
+// });
+

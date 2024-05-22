@@ -32,7 +32,7 @@ class AuthController extends Controller
 
     return $this->success([
         'user' => $user,
-        'token' =>$user->createToken('Api Token of ' . $user->name)->plainTextToken
+        'token' =>$user->createToken('Api Token of ' . $user->email)->plainTextToken
     ]);
 
         // if(!Auth::attempt([$request->only('email','password')])){
@@ -47,14 +47,14 @@ class AuthController extends Controller
     $request->validated($request->all());
 
     $user = User::create([
-        'name' => $request->name,
+        // 'name' => $request->name,
         'email' => $request->email,
         'password' => Hash::make($request->password)
     ]);
 
     return $this->success([
         'user' => $user,
-        'token' => $user->createToken('API Token of ' . $user->name)->plainTextToken
+        'token' => $user->createToken('API Token of ' . $user->email)->plainTextToken
     ]);
 }
 
