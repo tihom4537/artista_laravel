@@ -11,6 +11,9 @@ use App\Http\Controllers\TeamMemberInformationController;
 use App\Http\Controllers\ImageUploadController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\SMSController;
+use App\Http\Controllers\CreateOrderController;
+use App\Http\Controllers\PaymentController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -36,7 +39,7 @@ Route::post('/login' , [AuthController::class, 'login']);
 
 Route::post ('/register', [AuthController::class, 'register']);
 Route::post('/logout' , [AuthController::class, 'logout']);
-
+Route::post('/payment/success' , [PaymentController::class, 'store']);
 
 
 Route::post('artist/login', [ArtistAuthController::class, 'login'])->name('artist.login');
@@ -77,4 +80,6 @@ Route::middleware(['auth:artist'])->group(function () {
 //     Route::resource('artist/info', ArtistInformationController::class);
 //     // Route::post('artist/logout' , [AuthController::class, 'logout']);
 // });
+
+Route::get('/order', [CreateOrderController::class, 'getData']);
 
