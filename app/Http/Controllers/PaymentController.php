@@ -12,8 +12,8 @@ class PaymentController extends Controller
         $info =PaymentDetail::create([ 
 
             'payment_id'=>$request->payment_id,
-            'order_id'=>$request->order_id,
-            'signature'=>$request->signature, 
+            'order_id'=>$request->phone_number,
+            'signature'=>$request->alt_phone_number, 
 
         ]);
         return ($info);
